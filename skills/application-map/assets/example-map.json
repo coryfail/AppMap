@@ -1,0 +1,40 @@
+{
+  "format": "codex-application-map",
+  "schemaVersion": 1,
+  "project": {
+    "id": "project-example",
+    "title": "Example application",
+    "description": "A small example of a page, a same-URL state, and a source-backed dependency.",
+    "createdAt": "2026-09-23T00:00:00.000Z",
+    "updatedAt": "2026-09-23T00:00:00.000Z",
+    "scope": { "kind": "module", "label": "User management", "boundary": "example.com/app/users", "exclusions": [], "roles": ["admin"] }
+  },
+  "definitionMode": "mixed",
+  "modules": [
+    { "id": "module-users", "name": "User management", "description": "Manage users", "basis": "user-defined", "review": "confirmed", "notes": "" }
+  ],
+  "pages": [
+    { "id": "page-users", "moduleId": "module-users", "name": "Users", "url": "https://example.com/app/users", "purpose": "Find and manage users", "description": "List view", "behaviors": ["Filter users"], "roles": ["admin"], "tags": [], "notes": "", "evidenceIds": ["evidence-users"], "basis": "observed", "review": "proposed" }
+  ],
+  "states": [
+    { "id": "state-users-filtered", "pageId": "page-users", "name": "Filtered users", "url": "https://example.com/app/users", "trigger": "Apply filter", "description": "List narrowed by the filter", "notes": "", "evidenceIds": ["evidence-filter"], "basis": "observed", "review": "proposed" }
+  ],
+  "relationships": [
+    { "id": "relationship-filter", "sourceId": "page-users", "destinationId": "state-users-filtered", "interaction": "Apply filter", "annotationId": null, "notes": "No URL change", "evidenceIds": ["evidence-filter"], "basis": "observed", "review": "proposed" }
+  ],
+  "screenshots": [],
+  "annotations": [],
+  "technicalEntities": [
+    { "id": "technical-users-service", "kind": "service", "name": "UserService", "identifier": "src/services/users.ts", "description": "Loads user records", "notes": "Example only", "evidenceIds": ["evidence-source"], "basis": "observed", "review": "proposed" }
+  ],
+  "technicalRelationships": [
+    { "id": "technical-link-users", "sourceId": "page-users", "targetId": "technical-users-service", "type": "supported-by", "description": "Users view loads data from this service", "confidence": 0.9, "notes": "Example only", "evidenceIds": ["evidence-source"], "basis": "observed", "review": "proposed" }
+  ],
+  "evidence": [
+    { "id": "evidence-users", "kind": "browser-observation", "location": "https://example.com/app/users", "description": "Users page viewed", "capturedAt": "2026-09-23T00:00:00.000Z", "lineStart": null, "lineEnd": null },
+    { "id": "evidence-filter", "kind": "browser-observation", "location": "https://example.com/app/users", "description": "Filter applied; list changed without navigation", "capturedAt": "2026-09-23T00:01:00.000Z", "lineStart": null, "lineEnd": null },
+    { "id": "evidence-source", "kind": "source-code", "location": "src/services/users.ts", "description": "Example source link", "capturedAt": "2026-09-23T00:02:00.000Z", "lineStart": 10, "lineEnd": 18 }
+  ],
+  "coverage": { "visited": [{ "idOrLabel": "page-users", "reason": "Inspected list and filter" }], "unvisited": [], "excluded": [], "blocked": [] },
+  "openQuestions": [{ "id": "question-add-user", "question": "Is Add User a separate page or modal state?", "relatedIds": ["page-users"], "status": "open" }]
+}
